@@ -1,0 +1,12 @@
+{
+  "author": "Anthony Costabile",
+  "bugs": {
+    "url": "https://github.com/anthonycostabile/react-gimbal/issues"
+  },
+  "name": "react-gimbal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthonycostabile/react-gimbal.git"
+  },
+  "version": "1.0.0"
+}
