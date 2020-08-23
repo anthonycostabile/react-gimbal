@@ -3,13 +3,19 @@
   "bugs": {
     "url": "https://github.com/anthonycostabile/react-gimbal/issues"
   },
+  "dependencies": {
+    "react": "16.13.1"
+  },
   "devDependencies": {
+    "@types/react": "16.9.46",
     "eslint": "7.7.0",
     "eslint-config-prettier": "6.11.0",
     "prettier": "2.0.5",
     "typescript": "4.0.2"
   },
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "name": "react-gimbal",
   "repository": {
     "type": "git",
@@ -20,5 +26,5 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint"
   },
-  "version": "0.0.0"
+  "version": "1.0.0"
 }
