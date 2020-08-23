@@ -27,7 +27,7 @@ enum DragState {
   WAIT,
 }
 
-export const ResizeGimbal: SFC<IGimbalProps> = ({
+export const Gimbal: SFC<IGimbalProps> = ({
   anchorElement = document.documentElement,
   children,
   className,
@@ -251,3 +251,5 @@ export const ResizeGimbal: SFC<IGimbalProps> = ({
     </div>
   );
 };
+
+export default Gimbal;
