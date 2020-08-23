@@ -16,7 +16,7 @@
   "files": [
     "lib/**/*"
   ],
-  "module": "./lib/index.d.js",
+  "module": "./lib/index.js",
   "name": "react-gimbal",
   "repository": {
     "type": "git",
