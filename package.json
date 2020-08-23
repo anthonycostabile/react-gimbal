@@ -16,6 +16,7 @@
   "files": [
     "lib/**/*"
   ],
+  "module": "./lib/index.d.js",
   "name": "react-gimbal",
   "repository": {
     "type": "git",
@@ -31,5 +32,6 @@
     "postversion": "git push && git push --tags",
     "version": "npm run format && git add -A src"
   },
+  "typings": "./lib/index.d.ts",
   "version": "1.0.1"
 }
