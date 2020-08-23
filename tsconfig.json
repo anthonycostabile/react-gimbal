@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "esModuleInterop": true,
     "jsx": "react",
+    "lib": ["esnext", "dom"],
     "module": "commonjs",
     "outDir": "./lib",
     "strict": true,
