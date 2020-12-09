@@ -43,7 +43,10 @@ export const Gimbal: SFC<IGimbalProps> = ({
   const bound = useRef<[number, number, number]>([0, 0, 0]);
   const click = useRef<DragState>(DragState.IDLE);
   const divEl = useRef<HTMLDivElement | null>(null);
-  const limit = useRef<number>(0);
+  const limit = useRef<{ size: number; offset: number }>({
+    size: 0,
+    offset: 0,
+  });
   const mouse = useRef<MouseState>(MouseState.IDLE);
 
   // Memoize the direcion of movement for the Gimbal
@@ -58,7 +61,13 @@ export const Gimbal: SFC<IGimbalProps> = ({
   // Secondary function defined because of reference loss
   const getResizedValues = (position: number) => {
     const [max, min, factor] = bound.current;
-    const values = getOffsets(limit.current, position, max, min, factor);
+    const values = getOffsets(
+      limit.current.size,
+      position - limit.current.offset,
+      max,
+      min,
+      factor,
+    );
 
     return values;
   };
@@ -103,13 +112,24 @@ export const Gimbal: SFC<IGimbalProps> = ({
     setTimeout(() => setCurrentClass(idleClass), 10);
   };
 
-  const getHeightOf = useCallback(
-    (element: HTMLElement | null) =>
-      element !== null
-        ? isVertical
-          ? element.clientHeight
-          : element.clientWidth
-        : 0,
+  const getSizeOf = useCallback(
+    (element: HTMLElement | null) => {
+      if (element === null) {
+        return { size: 0, offset: 0 };
+      }
+
+      if (element.nodeName === 'html') {
+        return isVertical
+          ? { size: element.clientHeight, offset: 0 }
+          : { size: element.clientWidth, offset: 0 };
+      }
+
+      const clientRect = element.getBoundingClientRect();
+
+      return isVertical
+        ? { size: element.clientHeight, offset: Math.floor(clientRect.top) }
+        : { size: element.clientWidth, offset: Math.floor(clientRect.left) };
+    },
     [isVertical],
   );
 
@@ -128,7 +148,7 @@ export const Gimbal: SFC<IGimbalProps> = ({
             defaultPosition.percent !== undefined
               ? defaultPosition.percent
               : 50,
-            limit.current,
+            limit.current.size,
           );
 
     return onResize(getResizedValues(position));
@@ -181,7 +201,7 @@ export const Gimbal: SFC<IGimbalProps> = ({
 
   // Handle calculating the dimension on a window resizing
   const handleWindowResize = () => {
-    limit.current = getHeightOf(anchorElement);
+    limit.current = getSizeOf(anchorElement);
   };
 
   // On first render (or Anchor Ready), set current dimension property
@@ -197,14 +217,14 @@ export const Gimbal: SFC<IGimbalProps> = ({
 
     bound.current = getAbsoluteBounds(
       isReverse,
-      limit.current,
+      limit.current.size,
       maximum.pixels,
       minimum.pixels,
       maximum.percent,
       minimum.percent,
       maxPreferred,
       minPreferred,
-      getHeightOf(divEl.current),
+      getSizeOf(divEl.current).size,
     );
   }, [
     divEl.current,
