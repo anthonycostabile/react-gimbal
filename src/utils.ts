@@ -32,6 +32,19 @@ const getRangedValue = (value: number, maximum: number, minimum: number) =>
     EXTERNAL HELPERS
 /+ ================== */
 
+export const getSizeAndOffset = (isVertical: boolean) => {
+  const clientSize = isVertical ? 'clientHeight' : 'clientWidth';
+  const offsetType = isVertical ? 'top' : 'left';
+
+  return (element: HTMLElement | null): [number, number] =>
+    element === null
+      ? [0, 0]
+      : [
+          element[clientSize],
+          Math.floor(element.getBoundingClientRect()[offsetType]),
+        ];
+};
+
 export const getPercentageFromPixels = (pixels: number, limit: number) =>
   Math.round((pixels / limit) * 1000) / 10;
 

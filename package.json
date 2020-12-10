@@ -30,8 +30,9 @@
     "prepublishOnly": "npm run lint",
     "preversion": "npm run lint",
     "postversion": "git push && git push --tags",
+    "push-next": "npm publish --access public",
     "version": "npm run format && git add -A src"
   },
   "typings": "./lib/index.d.ts",
-  "version": "1.1.0"
+  "version": "1.1.1"
 }
