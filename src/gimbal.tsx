@@ -54,7 +54,7 @@ export const Gimbal: FC<IGimbalProps> = ({
     const [max, min, factor] = bound.current;
     const values = getOffsets(
       limit.current[0],
-      position - limit.current[0],
+      position - limit.current[1],
       max,
       min,
       factor,
@@ -190,7 +190,7 @@ export const Gimbal: FC<IGimbalProps> = ({
       minimum.prefer || (minimum.pixels === undefined ? 'percent' : 'pixels');
 
     const divElOffset = getSizeOf(divEl.current)[0];
-    const gimbalOffset = Math.floor(divElOffset ? divElOffset / 2 : 0);
+    const gimbalOffset = divElOffset && Math.floor(divElOffset / 2);
 
     bound.current = getAbsoluteBounds(
       isReverse,
