@@ -1,11 +1,4 @@
-import React, {
-  SFC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import {
   getAbsoluteBounds,
   getOffsets,
@@ -28,7 +21,7 @@ enum DragState {
   WAIT,
 }
 
-export const Gimbal: SFC<IGimbalProps> = ({
+export const Gimbal: FC<IGimbalProps> = ({
   anchorElement = document.documentElement,
   children,
   className,
@@ -48,10 +41,10 @@ export const Gimbal: SFC<IGimbalProps> = ({
   const mouse = useRef<MouseState>(MouseState.IDLE);
 
   // Memoize the direcion of movement for the Gimbal
-  const { isVertical, isReverse } = useMemo(
+  const { isReverse, isVertical } = useMemo(
     () => ({
-      isVertical: ['vertical', 'vertical-reverse'].includes(direction),
       isReverse: ['horizontal-reverse', 'vertical-reverse'].includes(direction),
+      isVertical: ['vertical', 'vertical-reverse'].includes(direction),
     }),
     [],
   );
