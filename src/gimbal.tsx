@@ -189,16 +189,19 @@ export const Gimbal: FC<IGimbalProps> = ({
     const minPreferred =
       minimum.prefer || (minimum.pixels === undefined ? 'percent' : 'pixels');
 
+    const divElOffset = getSizeOf(divEl.current)[0];
+    const gimbalOffset = Math.floor(divElOffset ? divElOffset / 2 : 0);
+
     bound.current = getAbsoluteBounds(
       isReverse,
-      limit.current[0],
+      limit.current[0] + gimbalOffset,
+      gimbalOffset,
       maximum.pixels,
       minimum.pixels,
       maximum.percent,
       minimum.percent,
       maxPreferred,
       minPreferred,
-      getSizeOf(divEl.current)[0],
     );
   }, [
     divEl.current,

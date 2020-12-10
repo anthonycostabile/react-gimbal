@@ -15,13 +15,13 @@ type CalculateFunction = (
 type CreateOptimisedLimits = (
   isReverse: boolean,
   absoluteLimit: number,
+  gimbalOffset: number,
   absoluteMaxPx?: number,
   absoluteMinPx?: number,
   relativeMaxPc?: number,
   relativeMinPc?: number,
   preferredMax?: 'percent' | 'pixels',
   preferredMin?: 'percent' | 'pixels',
-  gimbalOffset?: number,
 ) => [number, number, number];
 
 // Returns value respecting the maximum and minimum limits
@@ -67,13 +67,13 @@ export const getPreferredValue = (
 export const getAbsoluteBounds: CreateOptimisedLimits = (
   isReverse,
   absoluteLimit,
+  gimbalOffset,
   absoluteMaxPx = absoluteLimit,
   absoluteMinPx = 0,
   relativeMaxPc = 100,
   relativeMinPc = 0,
   preferredMax,
   preferredMin,
-  gimbalOffset,
 ) => {
   // Calculate absolutes based on them being a proportion of the Limit
   const absoluteMaxPc = getPixelsFromPercentage(relativeMaxPc, absoluteLimit);
@@ -100,7 +100,7 @@ export const getAbsoluteBounds: CreateOptimisedLimits = (
   return [
     isReverse ? absoluteLimit - validatedMinimum : validatedMaximum,
     isReverse ? absoluteLimit - validatedMaximum : validatedMinimum,
-    gimbalOffset ? gimbalOffset / 2 : 0,
+    gimbalOffset,
   ];
 };
 
